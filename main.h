@@ -13,6 +13,8 @@
 #define INIT_sp {0,0,0,0,0,0,0,0,0,0}
 #define buf_flush -1
 #define buf_size 1024
+#define OUTPUT_BUF_SIZE 1024
+#define BUF_FLUSH -1
 
 /* _printf prototype */
 int _printf(const char *format, ...);
@@ -45,6 +47,27 @@ int _string(va_list args, p_type *specif);
 int _percent(va_list args, p_type *specif);
 int _integer(va_list args, p_type *specif);
 
+int print_char(va_list ap , params_t *params);
+int print_int(va_list ap , params_t *params);
+int print_string(va_list ap , params_t *params);
+int print_percent(va_list ap , params_t *params);
+int print_S(va_list ap , params_t *params);
+
+/**
+ convert numbers */
+int print_hex(va_list ap , params_t *params);
+int print_HEX(va_list ap , params_t *params);
+int print_binary(va_list ap , params_t *params);
+int print_octal(va_list ap , params_t *params);
+
+/**num of module */
+char *convert(long int num , int base , int flags ,  params_t *params);
+int print_unsigned(va_list ap , params_t *params);
+int print_address(va_list ap , params_t *params);
+int print_rev(va_list ap , params_t *params);
+int print_rot(va_list ap , params_t *params);
+
+
 /**
  * struct flag - structure of paramters
  * @unsign: unsigned value
@@ -69,8 +92,14 @@ typedef struct flag
 	unsigned int h_modifier : 1;
 	unsigned int l_modifier : 1;
 	unsigned int precision
-	unsigned int width
+	unsigned int width;
+        unsigned int plus_flag : 1;
+        unsigned int minus_flag : 1;
+        unsigned int space_flag : 1;
+        unsigned int hashtag_flag : 1;
+        unsigned int zero_flag : 1;
 } p_type;
+params_t;
 /**
  * struct specifier - specifier structure
  * @f: function
