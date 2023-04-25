@@ -17,8 +17,8 @@ int _printf(const char *format, ...)
 	if (!format || (format[0] == '%' && !format[1]))
 		return (-1);
 	if (format[0] == '%' && format[1] == ' ' && !format[2])
-		return(-1);
-	for (c =(char *)format; *c; c++)
+		return (-1);
+	for (c = (char *)format; *c; c++)
 	{
 		init_specif(&specif, args);
 		if (*c != '%')
