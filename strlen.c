@@ -8,6 +8,8 @@
  */
 int p_strlen(char *begin, char *end, char *except)
 {
+	int len  = 0;
+
 	while (begin <= end)
 	{
 		if (begin != except)
