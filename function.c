@@ -6,8 +6,7 @@
  */
 int (*get_specifier(char *s))(va_list args, p_type *specif)
 {
-	specifier_type func[] = 
-	{
+	specifier_type func[] = {
 		{"c", p_char},
 		{"s", p_string},
 		{"%", p_percent},
@@ -20,13 +19,13 @@ int (*get_specifier(char *s))(va_list args, p_type *specif)
 		{"p", p_address},
 		{"x", p_hex},
 		{"X", p_HEX},
-		{"r", p_reverse},
+		{"r", p_rev},
 		{"R", p_rot13},
 		{NULL, NULL}
 	};
 	int n = 0;
 
-	while (func[n].specifer)
+	while (func[n].specifier)
 	{
 		if (*s == func[n].specifer[0])
 		{
@@ -45,17 +44,17 @@ int (*get_specifier(char *s))(va_list args, p_type *specif)
  */
 int get_p_func(char *s, va_list args, p_type *specif)
 {
-	int (*f)( va_list args, p_type *) = get_specifier(s);
+	int (*f)(va_list, p_type *) = get_specifier(s);
 
 	if (f)
 		return (f(args, specif));
-	return(0);
+	return (0);
 }
 /**
  * get_modifier - print the modifier
  * @s: string
- * @specif:specifier
- * Return: 0
+ * @specif: specifier
+ * Return: modifier
  */
 int get_modifier(char *s, p_type *specif)
 {
@@ -67,7 +66,7 @@ int get_modifier(char *s, p_type *specif)
 			i = specif->h_modifier = 1;
 			break;
 		case 'l':
-			i = specif_>l_modifier = 1;
+			i = specif->l_modifier = 1;
 			break;
 	}
 	return (i);
@@ -79,7 +78,7 @@ int get_modifier(char *s, p_type *specif)
  * @specif: specifier
  * Return: pointer
  */
-int get _width(char *s, va_list args, p_type *specif)
+char *get_width(char *s, va_list args, p_type *specif)
 {
 	int i = 0;
 
@@ -91,53 +90,53 @@ int get _width(char *s, va_list args, p_type *specif)
 	else
 	{
 		while (_isdigit(*s))
-			i += i * 10 (*s++ - '0');
+			i += i * 10 + (*s++ - '0');
 	}
 	specif->width = i;
 	return (s);
 }
 /**
- * get_precision - get perision format
+ * get_precision - get precision format
  * @s: string
  * @args: argumnet
  * @specif: specifier
  * Return: pointer
  */
-char get_precision(char *s, va_list args, p_type *specif)
+char *get_precision(char *s, va_list args, p_type *specif)
 {
-        int i = 0;
+	int i = 0;
 
-        if (*s == '*')
-        {
-                i = va_arg(args, int);
-                s++;
-        }
-        if (*s != '.')
-        {
-                return (s);
-                s++;
-        }
-        else
-        {
-                while(_isdigit(*s))
-                {
-                        i = i * 10 + (*s++ - '0');
-                }
-        }
-        specif->precision = i;
-        return (s);
+	if (*s == '*')
+	{
+		i = va_arg(args, int);
+		s++;
+	}
+	if (*s != '.')
+	{
+		return (s);
+		s++;
+	}
+	else
+	{
+		while (_isdigit(*s))
+		{
+			i = i * 10 + (*s++ - '0');
+		}
+	}
+	specif->precision = i;
+	return (s);
 }
 /**
  * get_flag - flag parameter
  * @s: the string
  * @specif: specifier
- * Return: 0
+ * Return: flag
  */
 int get_flag(char *s, p_type *specif)
 {
 	int i = 0;
 
-	switch(*s)
+	switch (*s)
 	{
 		case '+':
 			i = specif->plus_f = 1;
