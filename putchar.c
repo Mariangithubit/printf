@@ -9,15 +9,13 @@ int _putchar(int c)
 	static int j;
 	static char buffer[buf_size];
 
-	if (c != buf_flush)
-	{
-		buffer[j++] = c;
-	}
-	if (j >= buf_size || c == buf_flush)
+	if (j >= buf_size || c == flush)
 	{
 		write(1, buffer, j);
 		j = 0;
 	}
+	if (c != flush)
+		buffer[j++] = c;
 	return (1);
 }
 /**

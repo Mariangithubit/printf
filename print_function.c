@@ -1,54 +1,54 @@
 #include "main.h"
 /**
- * print_char - chars
- * @ap: args
- * @params: parameter
+ * p_char - chars
+ * @args: args
+ * @specif: parameter
  * Return: printed char
  */
-int print_char(va_list ap, params_t *params)
+int p_char(va_list args, p_type *specif)
 {
 	char pad_char = ' ';
-	unsigned int pad = 1, sum = 0, ch = va_arg(ap, int);
+	unsigned int pad = 1, sum = 0, ch = va_arg(args, int);
 
-	if (params->minus_flag)
+	if (specif->minus_flag)
 		sum += _putchar(ch);
-	while (pad++ < params->width)
+	while (pad++ < specif->width)
 		sum += _putchar(pad_char);
-	if (!params->minus_flag)
+	if (!specif->minus_flag)
 		sum += _putchar(ch);
 	return (sum);
 }
 /**
- * print_int - integer
- * @ap: args
- * @params: parameter
+ * p_int - integer
+ * @args: args
+ * @specif: parameter
  * Return: int
  */
-int print_int(va_list ap, params_t *params)
+int p_int(va_list args, p_type *specif)
 {
 	long l;
 
-	if (params->l_modifier)
-		l = va_arg(ap, long);
-	else if (params->h_modifier)
-		l = (short int)va_arg(ap, int);
+	if (specif->l_modifier)
+		l = va_arg(args, long);
+	else if (specif->h_modifier)
+		l = (short int)va_arg(args, int);
 	else
 	{
-		l = (int)va_arg(ap, int);
+		l = (int)va_arg(args, int);
 	}
-	return (print_number(convert(l, 10, 0, params), params));
+	return (print_number(convert(l, 10, 0, specif), specif));
 }
 /**
- * print_string - string
- * @ap: args
- * @params: parameter
+ * p_string - string
+ * @args: args
+ * @specif: parameter
  * Return: string
  */
-int print_string(va_list ap, params_t *params)
+int p_string(va_list args, p_type *specif)
 {
-	char *str = va_arg(ap, char *), pad_char = ' ';
-	unsigned int pad = sum = i = 0, j;
-	(void)params;
+	char *str = va_arg(args, char *), pad_char = ' ';
+	unsigned int pad = 0, sum = 0, i = 0, j;
+	(void)specif;
 
 	switch ((int)(!str))
 	{
@@ -56,65 +56,67 @@ int print_string(va_list ap, params_t *params)
 			str = NULL_STRING;
 			j = pad = _strlen(str);
 	}
-	if (params->minus_flag)
+	if (specif->precision < pad)
+		j = pad = specif->precision;
+	if (specif->minus_flag)
 	{
-		if (params->precision != UINT_MAX)
+		if (specif->precision != UINT_MAX)
 			for (i = 0; i < pad; i++)
-				sum += _putchar(*str++)
+				sum += _putchar(*str++);
 		else
-			sum += _puts(str);
+			sum += _input(str);
 	}
-	while (j++ < params->width)
+	while (j++ < specif->width)
 		sum += _putchar(pad_char);
-	if (!params->minus_flag)
+	if (!specif->minus_flag)
 	{
-		if (params->precision != UINT_MAX)
+		if (specif->precision != UINT_MAX)
 			for (i = 0; i < pad; i++)
-				sum += _putchar(*str++)
+				sum += _putchar(*str++);
 		else
-			sum += _puts(str);
+			sum += _input(str);
 	}
 	return (sum);
 }
 /**
- * print_percent - %
- * @ap: args
- * @params: parameter
+ * p_percent - %
+ * @args: args
+ * @specif: parameter
  * Return: percent
  */
-int print_percent(va_list ap, params_t *params)
+int p_percent(va_list args, p_type *specif)
 {
-	(void)ap;
-	(void)params;
+	(void)args;
+	(void)specif;
 
 	return (_putchar('%'));
 }
 /**
- * print_S - String
- * @ap: args
- * @params: parameter
+ * p_S - String
+ * @args: args
+ * @specif: parameter
  * Return: string
  */
-int print_S(va_list ap, params_t *params)
+int p_S(va_list args, p_type *specif)
 {
-	char *str = va_arg(ap, char *);
+	char *str = va_arg(args, char *);
 	char *hex;
 	int sum = 0;
 
 	if ((int)(!str))
-		return (_puts(NULL_STRING));
+		return (_input(NULL_STRING));
 	for (; *str; str++)
 	{
 		if ((*str > 0 && *str < 32) || *str >= 127)
 		{
 			sum += _putchar('\\');
 			sum += _putchar('x');
-			hex = convert(*str, 16, 0, params);
+			hex = convert(*str, 16, 0, specif);
 		}
 		if (!hex[1])
 		{
-			sum += _putchar('0')
-			sum += _puts(hex);
+			sum += _putchar('0');
+			sum += _input(hex);
 		}
 		else
 		{

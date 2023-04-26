@@ -7,10 +7,9 @@ void print_buffer(char buffer, int *buff_ind);
  */
 int _printf(const char *format, ...)
 {
-	int i;
 	int len = 0;
 	char *c, *str;
-	p_type specif = INIT;
+	p_type *specif = INIT;
 	va_list args;
 
 	va_start(args, format);
@@ -47,7 +46,7 @@ int _printf(const char *format, ...)
 			len += get_p_func(c, args, &specif);
 		}
 	}
-	_putchar(buf_flush);
+	_putchar(flush);
 	va_end(args);
 	return (len);
 }

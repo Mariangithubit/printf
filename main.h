@@ -1,4 +1,3 @@
-#ifndef MAIN_H
 #define MAIN_H
 #ifndef _PRINTF_H
 #define _PRINTF_H
@@ -9,16 +8,50 @@
 #include <unistd.h>
 #include <limits.h>
 
-<<<<<<< HEAD
 #define NULL_STRING "(null)"
 #define INIT {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-#define BUF_FLUSH -1
+#define FLUSH -1
 #define BUF_SIZE 1024
 #define CONVERT_LOWERCASE 1
 #define CONVERT_UNSIGNED 2
-#define P_TYPE
-#define PARAMS_T
-=======
+
+/**
+ * struct p_type - structure of paramters
+ * @unsign: unsigned value
+ * @plus_flag: positive value
+ * @minus_flag: negative value
+ * @space_flag: empty value
+ * @hashtag_flag: hashtag flag
+ * @zero_flag: no vlaue
+ * @h_modifier: short
+ * @l_modifier: long
+ * @precision: percent sign
+ * @width: the width
+ */
+typedef struct parameters
+{
+        unsigned int unsign : 1;
+        unsigned int plus_flag : 1;
+        unsigned int minus_flag : 1;
+        unsigned int space_flag : 1;
+        unsigned int hashtag_flag : 1;
+        unsigned int zero_flag : 1;
+        unsigned int h_modifier : 1;
+        unsigned int l_modifier : 1;
+        unsigned int precision;
+        unsigned int width;
+} p_type;
+
+/**
+ * struct specifier - specifier structure
+ * @f: function
+ * @specif: specifier format
+ */
+typedef struct specifier
+{
+        char *specifier;
+        int (*f)(va_list, p_type *);
+} specifier_type;
 
 /* _printf prototype */
 int _printf(const char *format, ...);
@@ -44,101 +77,32 @@ int (*get_specifier(char *s))(va_list args, p_type *specif);
 int p_strlen(char *begin, char *end, char *except);
 
 /* counnum.c prototype */
-char *convert(long int num, int base, int flag, params_t *params);
-int print_unsigned(va_list ap, params_t *params);
-int print_address(va_list ap, params_t *params);
+char *convert(long int num, int base, int flag, p_type *specif);
+int p_unsigned(va_list args, p_type *specif);
+int p_address(va_list args, p_type *specif);
 
 /* sm_p.c */
-int print_rev(va_list ap, params_t *params);
-int print_rot(va_list ap, params_t *params);
+int p_rev(va_list args, p_type *specif);
+int p_rot(va_list args, p_type *specif);
 
 /* cnv_num.c */
-int print_hex(va_list ap, params_t *params);
-int print_HEX(va_list ap, params_t *params);
-int print_binary(va_list ap, params_t *params);
-int print_octal(va_list ap, params_t *params);
+int p_hex(va_list args, p_type *specif);
+int p_HEX(va_list args, p_type *specif);
+int p_binary(va_list args, p_type *specif);
+int p_octal(va_list args, p_type *specif);
 
 /* p_num.c */
 int _isdigit(int c);
 int _strlen(char *s);
-int print_number(char *str, params_t *params);
-int print_number_right_shift(char *str, params_t *params);
-int print_number_lift_shift(char *str, params_t *params);
+int print_number(char *str, p_type *specif);
+int print_number_right_shift(char *str, p_type *specif);
+int print_number_left_shift(char *str, p_type *specif);
 
 /* print_function.c */
-int print_char(va_list ap, params_t *params);
-int print_int(va_list ap, params_t *params);
-int print_string(va_list ap, params_t *params);
-int print_percent(va_list ap, params_t *params);
-int print_S(va_list ap, params_t *params);
-
-int print_char(va_list ap , params_t *params);
-int print_int(va_list ap , params_t *params);
-int print_string(va_list ap , params_t *params);
-int print_percent(va_list ap , params_t *params);
-int print_S(va_list ap , params_t *params);
-
-/**
- convert numbers */
-int print_hex(va_list ap , params_t *params);
-int print_HEX(va_list ap , params_t *params);
-int print_binary(va_list ap , params_t *params);
-int print_octal(va_list ap , params_t *params);
-
-/**num of module */
-char *convert(long int num , int base , int flags ,  params_t *params);
-int print_unsigned(va_list ap , params_t *params);
-int print_address(va_list ap , params_t *params);
-int print_rev(va_list ap , params_t *params);
-int print_rot(va_list ap , params_t *params);
-
-
-/**
- * struct parameters - structure of paramters
- * @unsign: unsigned value
- * @plus_f: positive value
- * @minus_f: negative value
- * @space_f: empty value
- * @hashtag_f: hashtah flag
- * @zero_f:no vlaue
- * @h_modifier: short
- * @l_modifier: long
- * @precision: percent sign
- * @width: the width
- */
-typedef struct parameters
-{
-	unsigned int unsign : 1;
-	unsigned int plus_f : 1;
-	unsigned int minus_f : 1;
-	unsigned int space_f : 1;
-	unsigned int hashtag_f : 1;
-	unsigned int zero_f : 1;
-	unsigned int h_modifier : 1;
-	unsigned int l_modifier : 1;
-<<<<<<< HEAD
-	unsigned int precision;
-	unsigned int width;
-=======
-	unsigned int precision
-	unsigned int width;
-        unsigned int plus_flag : 1;
-        unsigned int minus_flag : 1;
-        unsigned int space_flag : 1;
-        unsigned int hashtag_flag : 1;
-        unsigned int zero_flag : 1;
->>>>>>> 66767f5c1cf9b4908604e5716109f69070d47095
-} p_type;
-params_t;
-/**
- * struct specifier - specifier structure
- * @f: function
- * @specif: specifier format
- */
-typedef struct specifier
-{
-	char *specif;
-	int (*f)(va_list, p_type *);
-} specifier_type;
+int p_char(va_list args, p_type *specif);
+int p_int(va_list args, p_type *specif);
+int p_string(va_list args, p_type *specif);
+int p_percent(va_list args, p_type *specif);
+int p_S(va_list args, p_type *specif);
 
 #endif

@@ -103,19 +103,19 @@ int get_flag(char *s, p_type *specif)
 	switch (*s)
 	{
 		case '+':
-			i = specif->plus_f = 1;
+			i = specif->plus_flag = 1;
 			break;
 		case '-':
-			i = specif->minus_f = 1;
+			i = specif->minus_flag = 1;
 			break;
 		case ' ':
-			i = specif->space_f = 1;
+			i = specif->space_flag = 1;
 			break;
 		case '#':
-			i = specif->hashtag_f = 1;
+			i = specif->hashtag_flag = 1;
 			break;
 		case '0':
-			i = specif->zero_f = 1;
+			i = specif->zero_flag = 1;
 			break;
 	}
 	return (i);
