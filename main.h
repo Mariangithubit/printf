@@ -9,6 +9,7 @@
 #include <unistd.h>
 #include <limits.h>
 
+<<<<<<< HEAD
 #define NULL_STRING "(null)"
 #define INIT {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 #define BUF_FLUSH -1
@@ -17,6 +18,7 @@
 #define CONVERT_UNSIGNED 2
 #define P_TYPE
 #define PARAMS_T
+=======
 
 /* _printf prototype */
 int _printf(const char *format, ...);
@@ -70,6 +72,27 @@ int print_string(va_list ap, params_t *params);
 int print_percent(va_list ap, params_t *params);
 int print_S(va_list ap, params_t *params);
 
+int print_char(va_list ap , params_t *params);
+int print_int(va_list ap , params_t *params);
+int print_string(va_list ap , params_t *params);
+int print_percent(va_list ap , params_t *params);
+int print_S(va_list ap , params_t *params);
+
+/**
+ convert numbers */
+int print_hex(va_list ap , params_t *params);
+int print_HEX(va_list ap , params_t *params);
+int print_binary(va_list ap , params_t *params);
+int print_octal(va_list ap , params_t *params);
+
+/**num of module */
+char *convert(long int num , int base , int flags ,  params_t *params);
+int print_unsigned(va_list ap , params_t *params);
+int print_address(va_list ap , params_t *params);
+int print_rev(va_list ap , params_t *params);
+int print_rot(va_list ap , params_t *params);
+
+
 /**
  * struct parameters - structure of paramters
  * @unsign: unsigned value
@@ -93,9 +116,20 @@ typedef struct parameters
 	unsigned int zero_f : 1;
 	unsigned int h_modifier : 1;
 	unsigned int l_modifier : 1;
+<<<<<<< HEAD
 	unsigned int precision;
 	unsigned int width;
+=======
+	unsigned int precision
+	unsigned int width;
+        unsigned int plus_flag : 1;
+        unsigned int minus_flag : 1;
+        unsigned int space_flag : 1;
+        unsigned int hashtag_flag : 1;
+        unsigned int zero_flag : 1;
+>>>>>>> 66767f5c1cf9b4908604e5716109f69070d47095
 } p_type;
+params_t;
 /**
  * struct specifier - specifier structure
  * @f: function
