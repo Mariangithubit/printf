@@ -14,7 +14,7 @@ int p_strlen(char *begin, char *end, char *except)
 	{
 		if (begin != except)
 			len += _putchar(*begin);
-		beign++;
+		begin++;
 	}
 	return (len);
 }

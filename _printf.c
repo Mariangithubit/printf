@@ -10,7 +10,7 @@ int _printf(const char *format, ...)
 	int i;
 	int len = 0;
 	char *c, *str;
-	p_type specif = INIT_sp;
+	p_type specif = INIT;
 	va_list args;
 
 	va_start(args, format);

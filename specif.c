@@ -14,8 +14,8 @@ void init_specif(va_list args, p_type *specif)
 	specif->hashtag_f = 0;
 	specif->zero_f = 0;
 	specif->h_modifier = 0;
-	sepcif->l_modifier = 0;
+	specif->l_modifier = 0;
 	specif->width = 0;
-	specif->precision = UNIT_MAX;
+	specif->precision = UINT_MAX;
 	(void)args;
 }
