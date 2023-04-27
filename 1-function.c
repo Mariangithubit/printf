@@ -35,3 +35,18 @@ int (*get_specifier(char *s))(va_list args, p_type * specif)
 	}
 	return (NULL);
 }
+/**
+ * get_p_func - print the function
+ * @s: the string
+ * @args: arguments
+ * @specif: specifier
+ * Return: the number of characters printed
+ */
+int get_p_func(char *s, va_list args, p_type *specif)
+{
+	int (*f)(va_list, p_type *) = get_specifier(s);
+
+	if (f)
+		return (f(args, specif));
+	return (0);
+}

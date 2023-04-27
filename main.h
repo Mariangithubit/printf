@@ -1,4 +1,3 @@
-#define MAIN_H
 #ifndef _PRINTF_H
 #define _PRINTF_H
 
@@ -9,14 +8,14 @@
 #include <limits.h>
 
 #define NULL_STRING "(null)"
-#define INIT {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-#define FLUSH -1
-#define BUF_SIZE 1024
+#define SPECIF_INIT {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+#define flush -1
+#define buf_size 1024
 #define CONVERT_LOWERCASE 1
 #define CONVERT_UNSIGNED 2
 
 /**
- * struct p_type - structure of paramters
+ * struct parameters - params
  * @unsign: unsigned value
  * @plus_flag: positive value
  * @minus_flag: negative value
@@ -30,27 +29,27 @@
  */
 typedef struct parameters
 {
-        unsigned int unsign : 1;
-        unsigned int plus_flag : 1;
-        unsigned int minus_flag : 1;
-        unsigned int space_flag : 1;
-        unsigned int hashtag_flag : 1;
-        unsigned int zero_flag : 1;
-        unsigned int h_modifier : 1;
-        unsigned int l_modifier : 1;
-        unsigned int precision;
-        unsigned int width;
+	unsigned int unsign : 1;
+	unsigned int plus_flag : 1;
+	unsigned int minus_flag : 1;
+	unsigned int space_flag : 1;
+	unsigned int hashtag_flag : 1;
+	unsigned int zero_flag : 1;
+	unsigned int h_modifier : 1;
+	unsigned int l_modifier : 1;
+	unsigned int precision;
+	unsigned int width;
 } p_type;
 
 /**
  * struct specifier - specifier structure
  * @f: function
- * @specif: specifier format
+ * @specifier: specifier format
  */
 typedef struct specifier
 {
-        char *specifier;
-        int (*f)(va_list, p_type *);
+	char *specifier;
+	int (*f)(va_list, p_type *);
 } specifier_type;
 
 /* _printf prototype */

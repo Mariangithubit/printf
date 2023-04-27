@@ -29,10 +29,8 @@ char *convert(long int num, int base, int flag, p_type *specif)
 		n /= base;
 	}
 	while (n != 0);
-	{
-		if (sign)
-			*--ptr = sign;
-	}
+	if (sign)
+		*--ptr = sign;
 	return (ptr);
 }
 /**

@@ -9,7 +9,7 @@ int _printf(const char *format, ...)
 {
 	int len = 0;
 	char *c, *str;
-	p_type *specif = INIT;
+	p_type specif = SPECIF_INIT;
 	va_list args;
 
 	va_start(args, format);
@@ -19,7 +19,7 @@ int _printf(const char *format, ...)
 		return (-1);
 	for (c = (char *)format; *c; c++)
 	{
-		init_specif(&specif, args);
+		init_specif(args, &specif);
 		if (*c != '%')
 		{
 			len += _putchar(*c);
@@ -31,8 +31,8 @@ int _printf(const char *format, ...)
 		{
 			c++;
 		}
-		c = get_width(c, &specif, args);
-		c = get_precision(c, &specif, args);
+		c = get_width(c, args, &specif);
+		c = get_precision(c, args, &specif);
 		if (get_modifier(c, &specif))
 		{
 			c++;
