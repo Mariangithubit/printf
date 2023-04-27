@@ -16,6 +16,7 @@
 
 /**
  * struct parameters - params
+ * @p_type - parameter type
  * @unsign: unsigned value
  * @plus_flag: positive value
  * @minus_flag: negative value
