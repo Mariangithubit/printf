@@ -1,52 +1,47 @@
 #include "main.h"
-void print_buffer(char buffer, int *buff_ind);
 /**
- * _printf - print specifier
- * @format: a character string.
- * Return: the number of characters
+ * _printf - prints anything
+ * @format: the format string
+ * Return: number of bytes printed
  */
+
 int _printf(const char *format, ...)
 {
-	int len = 0;
-	char *c, *str;
-	p_type specif = SPECIF_INIT;
-	va_list args;
+	int sum = 0;
+	va_list ap;
+	char *p, *start;
+	params_t params = PARAMS_INIT;
 
-	va_start(args, format);
+	va_start(ap, format);
 	if (!format || (format[0] == '%' && !format[1]))
 		return (-1);
 	if (format[0] == '%' && format[1] == ' ' && !format[2])
 		return (-1);
-	for (c = (char *)format; *c; c++)
+	for (p = (char *)format; *p; p++)
 	{
-		init_specif(args, &specif);
-		if (*c != '%')
+		init_params(&params, ap);
+		if (*p != '%')
 		{
-			len += _putchar(*c);
+			sum += _putchar(*p);
 			continue;
 		}
-		str = c;
-		c++;
-		while (get_flag(c, &specif))
+		start = p;
+		p++;
+		while (get_flag(p, &params))
 		{
-			c++;
+			p++; /* next char */
 		}
-		c = get_width(c, args, &specif);
-		c = get_precision(c, args, &specif);
-		if (get_modifier(c, &specif))
-		{
-			c++;
-		}
-		if (!get_specifier(c))
-		{
-			len += p_strlen(str, c, specif.h_modifier || specif.l_modifier ? c - 1 : 0);
-		}
+		p = get_width(p, &params, ap);
+		p = get_precision(p, &params, ap);
+		if (get_modifier(p, &params))
+			p++;
+		if (!get_specifier(p))
+			sum += print_from_to(start, p,
+				params.l_modifier || params.h_modifier ? p - 1 : 0);
 		else
-		{
-			len += get_p_func(c, args, &specif);
-		}
+			sum += get_print_func(p, ap, &params);
 	}
-	_putchar(flush);
-	va_end(args);
-	return (len);
+	_putchar(BUF_FLUSH);
+	va_end(ap);
+	return (sum);
 }
